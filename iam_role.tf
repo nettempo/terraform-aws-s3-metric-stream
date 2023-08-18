@@ -1,9 +1,9 @@
-resource "aws_iam_role" "cloudwatch-metric-stream" {
+resource "aws_iam_role" "cloudwatch_metric_stream" {
   name               = var.aws_iam_role_cloudwatch_metric_stream_name
-  assume_role_policy = data.aws_iam_policy_document.cloudwatch-metric-stream-assume-role.json
+  assume_role_policy = data.aws_iam_policy_document.cloudwatch_metric_stream_assume_role.json
 }
 
-data "aws_iam_policy_document" "cloudwatch-metric-stream-assume-role" {
+data "aws_iam_policy_document" "cloudwatch_metric_stream_assume_role" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -14,12 +14,12 @@ data "aws_iam_policy_document" "cloudwatch-metric-stream-assume-role" {
   }
 }
 
-resource "aws_iam_role" "cloudwatch-firehose" {
+resource "aws_iam_role" "cloudwatch_firehose" {
   name               = var.aws_iam_role_cloudwatch_firehose_name
-  assume_role_policy = data.aws_iam_policy_document.cloudwatch-firehose-assume-role.json
+  assume_role_policy = data.aws_iam_policy_document.cloudwatch_firehose_assume_role.json
 }
 
-data "aws_iam_policy_document" "cloudwatch-firehose-assume-role" {
+data "aws_iam_policy_document" "cloudwatch_firehose_assume_role" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -30,13 +30,13 @@ data "aws_iam_policy_document" "cloudwatch-firehose-assume-role" {
   }
 }
 
-resource "aws_iam_role_policy" "cloudwatch-metric-stream-firehose" {
+resource "aws_iam_role_policy" "cloudwatch_metric_stream_firehose" {
   name   = var.aws_iam_role_policy_cloudwatch_metric_stream_firehose_name
-  policy = data.aws_iam_policy_document.cloudwatch-metric-stream-firehose.json
-  role   = aws_iam_role.cloudwatch-metric-stream.name
+  policy = data.aws_iam_policy_document.cloudwatch_metric_stream_firehose.json
+  role   = aws_iam_role.cloudwatch_metric_stream.name
 }
 
-data "aws_iam_policy_document" "cloudwatch-metric-stream-firehose" {
+data "aws_iam_policy_document" "cloudwatch_metric_stream_firehose" {
   statement {
     actions = [
       "firehose:PutRecord",
@@ -47,13 +47,13 @@ data "aws_iam_policy_document" "cloudwatch-metric-stream-firehose" {
   }
 }
 
-resource "aws_iam_role_policy" "cloudwatch-firehose-s3-backup" {
-  name   = var.aws_iam_role_policy_cloudwatch_firehose_s3_backup_name
-  policy = data.aws_iam_policy_document.cloudwatch-firehose-s3-backup.json
-  role   = aws_iam_role.cloudwatch-firehose.name
+resource "aws_iam_role_policy" "cloudwatch_firehose_s3" {
+  name   = var.aws_iam_role_policy_cloudwatch_firehose_s3_name
+  policy = data.aws_iam_policy_document.cloudwatch_firehose_s3.json
+  role   = aws_iam_role.cloudwatch_firehose.name
 }
 
-data "aws_iam_policy_document" "cloudwatch-firehose-s3-backup" {
+data "aws_iam_policy_document" "cloudwatch_firehose_s3" {
   statement {
     actions = [
       "s3:GetBucketLocation",
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "cloudwatch-firehose-s3-backup" {
       "s3:ListBucketMultipartUploads",
     ]
 
-    resources = [aws_s3_bucket.cloudwatch-firehose-backup.arn]
+    resources = [aws_s3_bucket.cloudwatch_firehose.arn]
   }
 
   statement {
@@ -71,6 +71,6 @@ data "aws_iam_policy_document" "cloudwatch-firehose-s3-backup" {
       "s3:PutObject",
     ]
 
-    resources = ["${aws_s3_bucket.cloudwatch-firehose-backup.arn}/*"]
+    resources = ["${aws_s3_bucket.cloudwatch_firehose.arn}/*"]
   }
 }

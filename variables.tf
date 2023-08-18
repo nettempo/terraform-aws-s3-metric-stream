@@ -1,8 +1,3 @@
-variable "cloudwatch_api_key" {
-  type        = string
-  description = "The API Key for Cloudwatch"
-}
-
 variable "kinesis_firehose_delivery_stream_name" {
   type        = string
   default     = "cloudwatch"
@@ -50,21 +45,21 @@ variable "aws_iam_role_policy_cloudwatch_metric_stream_firehose_name" {
   description = "The name of the IAM Role Policy for Metric Stream to allow PutRecords to Firehose"
 }
 
-variable "aws_iam_role_policy_cloudwatch_firehose_s3_backup_name" {
+variable "aws_iam_role_policy_cloudwatch_firehose_s3_name" {
   type        = string
   default     = "CloudwatchFirehoseS3BackupPolicy"
   description = "The name of the IAM Role Policy for Firehose to allow PutObject to Firehose"
 }
 
-variable "s3_bucket_firehose_backup" {
+variable "s3_bucket_firehose" {
   type        = string
-  description = "The name of the S3 bucket for backup"
+  description = "The name of the S3 bucket"
 }
 
-variable "s3_bucket_backup_prefix" {
+variable "s3_bucket_prefix" {
   type        = string
   default     = "metrics/"
-  description = "The prefix of the S3 bucket for backup"
+  description = "The prefix of the S3 bucket"
 }
 
 variable "metric_stream_namespace_list" {
