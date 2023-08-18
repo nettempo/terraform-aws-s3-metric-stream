@@ -1,6 +1,7 @@
 resource "aws_iam_role" "cloudwatch_metric_stream" {
   name               = var.aws_iam_role_cloudwatch_metric_stream_name
   assume_role_policy = data.aws_iam_policy_document.cloudwatch_metric_stream_assume_role.json
+  permissions_boundary = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/BasicRole_Boundary"
 }
 
 data "aws_iam_policy_document" "cloudwatch_metric_stream_assume_role" {
@@ -17,6 +18,7 @@ data "aws_iam_policy_document" "cloudwatch_metric_stream_assume_role" {
 resource "aws_iam_role" "cloudwatch_firehose" {
   name               = var.aws_iam_role_cloudwatch_firehose_name
   assume_role_policy = data.aws_iam_policy_document.cloudwatch_firehose_assume_role.json
+  permissions_boundary = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/BasicRole_Boundary"
 }
 
 data "aws_iam_policy_document" "cloudwatch_firehose_assume_role" {
