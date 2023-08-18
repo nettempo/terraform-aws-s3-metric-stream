@@ -1,6 +1,6 @@
 resource "aws_kinesis_firehose_delivery_stream" "cloudwatch" {
   name        = var.kinesis_firehose_delivery_stream_name
-  destination = "http_endpoint"
+  destination = "extended_s3"
 
   extended_s3_configuration {
     bucket_arn      = aws_s3_bucket.cloudwatch_firehose.arn
