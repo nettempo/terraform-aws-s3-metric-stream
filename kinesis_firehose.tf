@@ -4,10 +4,12 @@ resource "aws_kinesis_firehose_delivery_stream" "cloudwatch" {
 
   extended_s3_configuration {
     bucket_arn      = aws_s3_bucket.cloudwatch_firehose.arn
-    buffer_interval = 300
+    buffer_interval = 60
     buffer_size     = 5
     prefix          = var.s3_bucket_prefix
     role_arn        = aws_iam_role.cloudwatch_firehose.arn
+    error_output_prefix = "error/"
+    compression_format = "ZIP"
 
     cloudwatch_logging_options {
       enabled         = true
