@@ -36,6 +36,18 @@ resource "aws_sqs_queue" "metrics_stream" {
 POLICY
 }
 
+resource "aws_ssm_parameter" "metrics_stream" {
+  name = "/mts-dev-usw2/vector/metrics-stream-sqs-queue-url"
+  type = "STRING"
+  value = aws_sqs_queue.metrics_stream.url
+}
+
+resource "aws_ssm_parameter" "metrics_stream_region" {
+  name = "/mts-dev-usw2/vector/metrics-stream-region"
+  type = "STRING"
+  value = data.aws_region.current.name
+}
+
 resource "aws_s3_bucket_notification" "metrics_stream" {
   bucket = aws_s3_bucket.cloudwatch_firehose.id
 
