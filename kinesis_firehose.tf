@@ -9,7 +9,7 @@ resource "aws_kinesis_firehose_delivery_stream" "cloudwatch" {
     prefix          = var.s3_bucket_prefix
     role_arn        = aws_iam_role.cloudwatch_firehose.arn
     error_output_prefix = "error/"
-    compression_format = "ZIP"
+    compression_format = "GZ"
 
     cloudwatch_logging_options {
       enabled         = true
