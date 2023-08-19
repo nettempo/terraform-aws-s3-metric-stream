@@ -37,13 +37,13 @@ POLICY
 }
 
 resource "aws_ssm_parameter" "metrics_stream" {
-  name = "/mts-dev-usw2/vector/metrics-stream-sqs-queue-url"
+  name = "/${var.environment}/vector/metrics-stream-sqs-queue-url"
   type = "String"
   value = aws_sqs_queue.metrics_stream.url
 }
 
 resource "aws_ssm_parameter" "metrics_stream_region" {
-  name = "/mts-dev-usw2/vector/metrics-stream-region"
+  name = "/${var.environment}/vector/metrics-stream-region"
   type = "String"
   value = data.aws_region.current.name
 }

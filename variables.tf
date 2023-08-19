@@ -1,3 +1,8 @@
+variable environment {
+  type = string
+  description = "Environment"
+}
+
 variable "kinesis_firehose_delivery_stream_name" {
   type        = string
   default     = "cloudwatch"
