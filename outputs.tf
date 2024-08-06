@@ -33,3 +33,7 @@ output "aws_iam_role_policy_cloudwatch_firehose_s3_name" {
 output "sqs_queue_name" {
   value = aws_sqs_queue.metrics_stream.name
 }
+
+output "sqs_queue_url" {
+  value = aws_sqs_queue.metrics_stream.url
+}
