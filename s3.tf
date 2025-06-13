@@ -6,6 +6,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudwatch_firehose" {
   bucket   = aws_s3_bucket.cloudwatch_firehose.bucket
   rule {
     id = "expirelogs"
+    filter {
+      prefix = ""
+    }
 
     expiration {
       days = 30
@@ -56,5 +59,33 @@ resource "aws_s3_bucket_notification" "metrics_stream" {
     events        = ["s3:ObjectCreated:*"]
     filter_prefix = "metrics/"
     filter_suffix = ".gz"
+  }
+}
+
+resource "aws_s3_bucket_policy" "cloudwatch_firehose" {
+  bucket = aws_s3_bucket.cloudwatch_firehose.id
+  policy = data.aws_iam_policy_document.cloudwatch_firehose.json
+}
+
+data "aws_iam_policy_document" "cloudwatch_firehose" {
+  statement {
+    sid = "DenyAllHTTPRequests"
+    effect = "Deny"
+    actions = [
+      "s3:*"
+    ]
+    resources = [
+      "arn:aws:s3:::${var.s3_bucket_firehose}",
+      "arn:aws:s3:::${var.s3_bucket_firehose}/*"
+    ]
+    principals {
+      type = "AWS"
+      identifiers = ["*"]
+    }
+    condition {
+      test     = "Bool"
+      values   = ["false"]
+      variable = "aws:SecureTransport"
+    }
   }
 }
